@@ -74,8 +74,8 @@ export const checklistGroups: ChecklistGroup[] = [
       },
       {
         label: "Official domain connected: nurturecal.com",
-        status: "in_progress",
-        note: "The final domain is known; GitHub and Vercel are connected, and the final domain cutover is the remaining website launch step."
+        status: "done",
+        note: "The primary domain is connected and serving the live website."
       },
       {
         label: "Real App Store and Google Play badges with Coming Soon",
@@ -129,25 +129,28 @@ export const checklistGroups: ChecklistGroup[] = [
     items: [
       {
         label: "Separate GitHub repo created for the Expo mobile app under the client's ownership",
-        status: "pending"
+        status: "done",
+        note: "The mobile app now has its own client-owned GitHub repository."
       },
       {
         label: "Production Supabase project created and linked",
-        status: "pending"
+        status: "done",
+        note: "The production Supabase project is set up and linked for the app."
       },
       {
         label: "Supabase migrations and Edge Functions deployed",
-        status: "pending"
+        status: "done",
+        note: "The production database migrations and Edge Functions are deployed."
       },
       {
         label: "USDA secret deployed to production backend",
-        status: "pending",
-        note: "The USDA key has been provided for use, but production backend deployment is still pending."
+        status: "done",
+        note: "The USDA secret is available in the production backend environment."
       },
       {
         label: "OpenAI production setup for the mobile app",
-        status: "blocked",
-        note: "Blocked on the client's production OpenAI account; personal website-only image generation can happen separately."
+        status: "done",
+        note: "The mobile app production OpenAI setup is complete."
       },
       {
         label: "RevenueCat account, products, and entitlements",
