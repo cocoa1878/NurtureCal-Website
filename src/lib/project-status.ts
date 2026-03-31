@@ -1,3 +1,5 @@
+import { stitchMockups } from "@/lib/stitch-mockups";
+
 export type ChecklistStatus = "done" | "in_progress" | "blocked" | "pending";
 export type ScreenBuildStatus = "built" | "polish" | "blocked" | "pending";
 export type ScreenApprovalStatus =
@@ -38,6 +40,7 @@ export type ScreenApprovalItem = {
   mockupStatus: ScreenMockupStatus;
   note: string;
   preview: PreviewConfig;
+  mockupImageUrl?: string;
 };
 
 export type ScreenApprovalGroup = {
@@ -48,7 +51,18 @@ export type ScreenApprovalGroup = {
 };
 
 function screen(item: ScreenApprovalItem): ScreenApprovalItem {
-  return item;
+  const mockupImageUrl = stitchMockups[item.id];
+
+  if (!mockupImageUrl) {
+    return item;
+  }
+
+  return {
+    ...item,
+    approvalStatus: item.approvalStatus === "approved" ? "approved" : "ready_for_review",
+    mockupStatus: "ready",
+    mockupImageUrl
+  };
 }
 
 export const checklistGroups: ChecklistGroup[] = [
@@ -117,8 +131,8 @@ export const checklistGroups: ChecklistGroup[] = [
       },
       {
         label: "Screen-by-screen visual approval set for the launch routes",
-        status: "in_progress",
-        note: "The status page exists now; actual polished mockup assets are still the next step."
+        status: "done",
+        note: "All 30 launch approval surfaces now have Stitch-generated mockups available for review on the status site."
       }
     ]
   },

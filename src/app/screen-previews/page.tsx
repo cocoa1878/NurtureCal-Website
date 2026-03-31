@@ -25,7 +25,7 @@ const bodyFont = Manrope({
 export const metadata: Metadata = {
   title: "NurtureCal Screen Previews",
   description:
-    "Approval gallery for the NurtureCal app screens, using structured preview mockups tied to the real route inventory.",
+    "Approval gallery for the NurtureCal app screens, using Stitch-generated mockups tied to the real route inventory.",
   icons: {
     icon: "/websitedemo/icon.png"
   }
@@ -274,24 +274,42 @@ function renderMockup(screen: ScreenApprovalItem) {
   return (
     <div className={styles.phoneFrame}>
       <div className={styles.phoneNotch} />
-      <div className={styles.phoneCanvas}>
-        <span className={styles.mockupEyebrow}>{screen.preview.eyebrow}</span>
-        <h4>{screen.preview.title}</h4>
-        <p className={styles.mockupCopy}>{screen.preview.body}</p>
+      <div
+        className={
+          screen.mockupImageUrl
+            ? `${styles.phoneCanvas} ${styles.phoneCanvasImageShell}`
+            : styles.phoneCanvas
+        }
+      >
+        {screen.mockupImageUrl ? (
+          <img
+            alt={`${screen.title} approval mockup`}
+            className={styles.mockupImage}
+            decoding="async"
+            loading="lazy"
+            src={screen.mockupImageUrl}
+          />
+        ) : (
+          <>
+            <span className={styles.mockupEyebrow}>{screen.preview.eyebrow}</span>
+            <h4>{screen.preview.title}</h4>
+            <p className={styles.mockupCopy}>{screen.preview.body}</p>
 
-        {screen.preview.chips?.length ? (
-          <div className={styles.chipRow}>
-            {screen.preview.chips.map((chip) => (
-              <span className={styles.chip} key={chip}>
-                {chip}
-              </span>
-            ))}
-          </div>
-        ) : null}
+            {screen.preview.chips?.length ? (
+              <div className={styles.chipRow}>
+                {screen.preview.chips.map((chip) => (
+                  <span className={styles.chip} key={chip}>
+                    {chip}
+                  </span>
+                ))}
+              </div>
+            ) : null}
 
-        {renderWidgetStack(screen)}
-        <div className={styles.mockupButton}>{screen.preview.cta}</div>
-        {renderTabs(screen)}
+            {renderWidgetStack(screen)}
+            <div className={styles.mockupButton}>{screen.preview.cta}</div>
+            {renderTabs(screen)}
+          </>
+        )}
       </div>
     </div>
   );
@@ -330,9 +348,8 @@ export default function ScreenPreviewsPage() {
           </div>
 
           <p className={styles.heroIntro}>
-            This gallery shows all current approval surfaces for the app. These are
-            structured preview mockups tied to the real screen inventory, not literal
-            simulator screenshots yet.
+            This gallery shows all current approval surfaces for the app using
+            Stitch-generated review mockups tied to the real screen inventory.
           </p>
 
           <div className={styles.heroMeta}>
@@ -355,9 +372,9 @@ export default function ScreenPreviewsPage() {
           </div>
 
           <p className={styles.heroNote}>
-            Honest note: the screens exist in the mobile app code today. What we still do
-            not have is an exported set of real captured screenshots. This gallery is the
-            review system until we can capture the app directly.
+            Honest note: the screens exist in the mobile app code today, but these are
+            approval mockups rather than exported Expo screenshots. They are the review
+            set we can use right now while the runtime capture pass comes later.
           </p>
 
           <nav className={styles.sectionNav}>
