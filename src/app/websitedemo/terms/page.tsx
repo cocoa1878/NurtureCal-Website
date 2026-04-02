@@ -113,7 +113,7 @@ export default function WebsiteDemoTermsPage() {
           <p>
             If you need support with a purchase that is not available through the
             store’s standard refund flow, contact{" "}
-            <a href="mailto:Realnurturingfnp@gmail.com">Realnurturingfnp@gmail.com</a>.
+            <a href="mailto:info@realnurturingfnp.com">info@realnurturingfnp.com</a>.
           </p>
         </section>
 
@@ -166,7 +166,7 @@ export default function WebsiteDemoTermsPage() {
             To the extent permitted by law, these terms are governed by the laws of
             the State of Texas, without regard to conflict-of-law rules. Questions
             about these terms can be sent to{" "}
-            <a href="mailto:Realnurturingfnp@gmail.com">Realnurturingfnp@gmail.com</a>.
+            <a href="mailto:info@realnurturingfnp.com">info@realnurturingfnp.com</a>.
           </p>
         </section>
       </div>

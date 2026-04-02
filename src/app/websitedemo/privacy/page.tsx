@@ -102,7 +102,7 @@ export default function WebsiteDemoPrivacyPage() {
           </p>
           <p>
             If you want us to delete your waitlist or account data, email{" "}
-            <a href="mailto:Realnurturingfnp@gmail.com">Realnurturingfnp@gmail.com</a>.
+            <a href="mailto:info@realnurturingfnp.com">info@realnurturingfnp.com</a>.
             We may keep limited records when necessary for security, billing, tax,
             or legal compliance. Apple’s App Review Guidelines currently require a
             privacy policy to explain retention and deletion practices and how users
@@ -140,7 +140,7 @@ export default function WebsiteDemoPrivacyPage() {
           </p>
           <p>
             Questions about this policy can be sent to{" "}
-            <a href="mailto:Realnurturingfnp@gmail.com">Realnurturingfnp@gmail.com</a>.
+            <a href="mailto:info@realnurturingfnp.com">info@realnurturingfnp.com</a>.
           </p>
         </section>
       </div>

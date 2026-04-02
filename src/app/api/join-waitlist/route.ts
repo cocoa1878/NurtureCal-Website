@@ -102,7 +102,7 @@ export async function POST(request: Request) {
   }
 
   const from = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
-  const to = process.env.CHECKLIST_TO_EMAIL || "Realnurturingfnp@gmail.com";
+  const to = process.env.CHECKLIST_TO_EMAIL || "info@realnurturingfnp.com";
   const submittedAtIso = new Date().toISOString();
   const submittedAt = new Date(submittedAtIso).toLocaleString("en-US", {
     timeZone: "America/Chicago"
