@@ -415,7 +415,7 @@ export default function WebsiteDemoPage() {
           <div className={styles.waitlistPanel}>
             <div className={styles.waitlistCopy}>
               <p className={styles.supportKicker}>Join the waitlist</p>
-              <h2>Start building interest before the app officially launches.</h2>
+              <h2>Get launch updates and early access news.</h2>
               <p>
                 Join the NurtureCal waitlist for launch updates, early access news,
                 and the first invitation when the app opens.
