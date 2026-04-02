@@ -427,23 +427,30 @@
 
 .showcaseSection {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-  gap: 34px;
+  width: min(1220px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 0.9fr);
+  gap: clamp(28px, 4vw, 64px);
   align-items: center;
 }
 
 .showcaseMedia {
   position: relative;
-  min-height: 440px;
+  min-height: 420px;
   min-width: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
 .showcaseGlow {
   position: absolute;
-  left: 0;
-  bottom: 36px;
-  width: min(520px, 90%);
+  left: 50%;
+  bottom: 26px;
+  width: min(500px, 88%);
   height: 280px;
+  transform: translateX(-54%);
   border-radius: 0 170px 170px 0;
   background:
     radial-gradient(circle at 28% 34%, rgba(155, 237, 22, 0.38), transparent 24%),
@@ -451,10 +458,11 @@
 }
 
 .laptopMock {
-  position: absolute;
-  left: 24px;
-  bottom: 22px;
-  width: min(640px, 96%);
+  position: relative;
+  left: auto;
+  bottom: auto;
+  width: min(600px, 96%);
+  margin: 0 auto;
 }
 
 .showcaseLaptopImage {
@@ -629,7 +637,9 @@
 
 .showcaseCopy {
   position: relative;
-  padding-right: 10px;
+  justify-self: start;
+  max-width: 520px;
+  padding-right: 0;
   min-width: 0;
 }
 
@@ -657,7 +667,7 @@
 .showcasePhone {
   position: relative;
   width: 220px;
-  margin: 28px 0 0 auto;
+  margin: 28px 0 0;
 }
 
 .showcasePhoneGlow {
@@ -670,7 +680,7 @@
 .showcasePhoneMock {
   position: relative;
   width: 220px;
-  margin-left: auto;
+  margin-left: 0;
 }
 
 .showcasePhoneImage {
