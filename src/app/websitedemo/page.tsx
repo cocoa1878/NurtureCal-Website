@@ -378,8 +378,6 @@ export default function WebsiteDemoPage() {
             <a href="#features">Features</a>
             <a href="#how-it-works">How It Works</a>
             <a href="#waitlist">Waitlist</a>
-            <Link href="/project-status">Build Status</Link>
-            <Link href="/screen-previews">Screen Previews</Link>
             <Link href="/privacy">Privacy</Link>
             <Link href="/terms">Terms</Link>
           </div>
