@@ -427,10 +427,6 @@ export default function WebsiteDemoPage() {
                 <li>Stay connected without committing to anything yet</li>
               </ul>
 
-              <p className={styles.waitlistSupport}>
-                Support questions can be sent to{" "}
-                <a href="mailto:Realnurturingfnp@gmail.com">Realnurturingfnp@gmail.com</a>.
-              </p>
             </div>
 
             <WaitlistForm />
