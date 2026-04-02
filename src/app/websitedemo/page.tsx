@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import type { ReactNode } from "react";
 import { Manrope, Sora } from "next/font/google";
 import { WaitlistForm } from "@/components/waitlist-form";
 import styles from "./page.module.css";
@@ -113,44 +112,32 @@ const faqs = [
   }
 ];
 
-function AppStoreIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24">
-      <path
-        d="M15.5 3.4c.9-1.1 1.4-2.5 1.3-3.4-1.3.1-2.7.9-3.6 2-.8.9-1.5 2.3-1.3 3.6 1.4.1 2.7-.7 3.6-2.2Zm4.1 14.8c-.5 1.1-.8 1.6-1.4 2.6-.8 1.3-1.9 2.9-3.3 2.9-1.2 0-1.5-.8-3.2-.8s-2.1.8-3.3.8c-1.4 0-2.4-1.4-3.2-2.7C3 18.2 1.6 13.8 3.4 10.8c.9-1.5 2.4-2.4 3.9-2.4 1.3 0 2.4.8 3.6.8 1.2 0 2-.8 3.6-.8 1.4 0 2.9.8 3.8 2.2-3.4 1.8-2.9 6.6 1.3 7.6Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-function GooglePlayIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24">
-      <path d="M3 2.8 13.9 12 3 21.2Z" fill="#00d07a" />
-      <path d="M13.9 12 17.2 8.7 21.1 10.9c1.2.7 1.2 1.6 0 2.2l-3.9 2.2Z" fill="#ffd24a" />
-      <path d="M3 2.8 17.2 8.7 13.9 12Z" fill="#3aa0ff" />
-      <path d="M3 21.2 13.9 12 17.2 15.3Z" fill="#ff6d5a" />
-    </svg>
-  );
-}
-
 function StoreBadge({
   href,
-  icon,
+  imageAlt,
+  imageHeight,
+  imageSrc,
+  imageWidth,
   platform
 }: {
   href: string;
-  icon: ReactNode;
+  imageAlt: string;
+  imageHeight: number;
+  imageSrc: string;
+  imageWidth: number;
   platform: string;
 }) {
   return (
     <a className={styles.storeBadge} href={href}>
-      <span className={styles.storeBadgeIcon}>{icon}</span>
-      <span className={styles.storeBadgeCopy}>
-        <span>Coming soon</span>
-        <strong>{platform}</strong>
-      </span>
+      <Image
+        alt={imageAlt}
+        className={styles.storeBadgeImage}
+        height={imageHeight}
+        sizes="(max-width: 560px) 170px, 184px"
+        src={imageSrc}
+        width={imageWidth}
+      />
+      <span className={styles.storeBadgeAssistive}>Coming soon on {platform}</span>
     </a>
   );
 }
@@ -220,6 +207,28 @@ export default function WebsiteDemoPage() {
                   Balanced eating with carbs, a simple daily structure, and support
                   designed by a healthcare professional.
                 </p>
+
+                <div className={styles.storeBadgeGroup}>
+                  <p className={styles.storeBadgeLabel}>Coming Soon</p>
+                  <div className={styles.storeBadgeRow}>
+                    <StoreBadge
+                      href="#waitlist"
+                      imageAlt="Download on the App Store"
+                      imageHeight={320}
+                      imageSrc="/websitedemo/app-store-badge.png"
+                      imageWidth={640}
+                      platform="App Store"
+                    />
+                    <StoreBadge
+                      href="#waitlist"
+                      imageAlt="Get it on Google Play"
+                      imageHeight={670}
+                      imageSrc="/websitedemo/google-play-badge.png"
+                      imageWidth={1920}
+                      platform="Google Play"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -383,8 +392,25 @@ export default function WebsiteDemoPage() {
           </div>
 
           <div className={styles.footerBadges}>
-            <StoreBadge href="#waitlist" icon={<AppStoreIcon />} platform="App Store" />
-            <StoreBadge href="#waitlist" icon={<GooglePlayIcon />} platform="Google Play" />
+            <p className={styles.storeBadgeLabel}>Coming Soon</p>
+            <div className={styles.storeBadgeRow}>
+              <StoreBadge
+                href="#waitlist"
+                imageAlt="Download on the App Store"
+                imageHeight={320}
+                imageSrc="/websitedemo/app-store-badge.png"
+                imageWidth={640}
+                platform="App Store"
+              />
+              <StoreBadge
+                href="#waitlist"
+                imageAlt="Get it on Google Play"
+                imageHeight={670}
+                imageSrc="/websitedemo/google-play-badge.png"
+                imageWidth={1920}
+                platform="Google Play"
+              />
+            </div>
           </div>
         </footer>
       </div>
