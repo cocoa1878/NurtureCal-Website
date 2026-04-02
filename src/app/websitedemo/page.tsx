@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   }
 };
 
+type FeatureIconKey = "balanced_plate" | "meal_structure" | "clinical_support";
+type BenefitIconKey = "target" | "carb_balance" | "clarity" | "progress";
+
 const stats = [
   {
     value: "Protein + carb + veggies",
@@ -41,48 +44,56 @@ const stats = [
   }
 ];
 
-const features = [
+const features: Array<{
+  icon: FeatureIconKey;
+  title: string;
+  copy: string;
+}> = [
   {
-    icon: "BC",
+    icon: "balanced_plate",
     title: "Balanced eating with carbs",
     copy:
       "Rice, potatoes, fruit, and bread stay on the table. The focus is balance, portions, and pairing carbs with protein."
   },
   {
-    icon: "SM",
+    icon: "meal_structure",
     title: "Simple meal structure",
     copy:
       "Every meal is built around protein, carbohydrates, and vegetables so healthy eating feels clear, not complicated."
   },
   {
-    icon: "HP",
+    icon: "clinical_support",
     title: "Healthcare-professional design",
     copy:
       "NurtureCal is grounded in the practical guidance a licensed healthcare professional uses with real patients."
   }
 ];
 
-const benefitCards = [
+const benefitCards: Array<{
+  icon: BenefitIconKey;
+  title: string;
+  copy: string;
+}> = [
   {
-    badge: "AM",
+    icon: "target",
     title: "Start with a realistic target",
     copy:
       "Guided onboarding turns the basics into a daily calorie and macro target that feels usable in real life."
   },
   {
-    badge: "LN",
+    icon: "carb_balance",
     title: "Keep carbs in the plan",
     copy:
       "The method does not ask you to cut carbs out. It helps you pair them better so meals stay satisfying and structured."
   },
   {
-    badge: "PM",
+    icon: "clarity",
     title: "Reduce decision fatigue",
     copy:
       "A repeatable plate structure makes it easier to know what to eat without starting from zero every time."
   },
   {
-    badge: "WK",
+    icon: "progress",
     title: "Track progress without obsession",
     copy:
       "Calories still matter, but the app keeps progress visible without making every day revolve around numbers."
@@ -111,6 +122,62 @@ const faqs = [
       "It is designed for adults who want a simpler, more sustainable approach to nutrition. It is not meant for pregnancy or breastfeeding support."
   }
 ];
+
+function renderIcon(icon: FeatureIconKey | BenefitIconKey) {
+  switch (icon) {
+    case "balanced_plate":
+      return (
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="8.25" fill="none" stroke="currentColor" strokeWidth="1.75" />
+          <path d="M12 3.75v16.5M5.75 12h12.5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+          <path d="M12 12c0-2.35 1.9-4.25 4.25-4.25" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+        </svg>
+      );
+    case "meal_structure":
+      return (
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <rect x="5" y="4.5" width="14" height="15" rx="3" fill="none" stroke="currentColor" strokeWidth="1.75" />
+          <path d="M9 8.75h6M9 12h6M9 15.25h3.5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+          <path d="m6.9 8.7.9.9 1.6-1.8" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      );
+    case "clinical_support":
+      return (
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M12 4.25 6.5 6.4v4.9c0 3.45 2.15 6.6 5.5 8.45 3.35-1.85 5.5-5 5.5-8.45V6.4Z" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinejoin="round" />
+          <path d="M12 8.35v5.1M9.45 10.9h5.1" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+        </svg>
+      );
+    case "target":
+      return (
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="7.25" fill="none" stroke="currentColor" strokeWidth="1.75" />
+          <circle cx="12" cy="12" r="3.4" fill="none" stroke="currentColor" strokeWidth="1.75" />
+          <circle cx="12" cy="12" r="0.85" fill="currentColor" />
+        </svg>
+      );
+    case "carb_balance":
+      return (
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M5.5 13.75h13a5 5 0 0 1-13 0Z" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinejoin="round" />
+          <path d="M8.1 10.2c.55-.95 1.55-1.7 2.8-1.7 1.2 0 1.75.55 2.55.55 1 0 1.55-.85 2.55-.85.85 0 1.6.4 2.15 1.1" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+          <path d="M9 6.25c.3.95.2 1.9-.25 2.65M13.25 5.75c.2.95.05 1.85-.4 2.55" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+        </svg>
+      );
+    case "clarity":
+      return (
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="m7 6.5 4.75 4.75M11.75 11.25 7 16M17 6.5h-2.5M17 12h-4.25M17 17.5h-6.5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      );
+    case "progress":
+      return (
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M5.5 17.5V6.5M5.5 17.5h13M8.5 14l3-3 2.5 2.5 4-4" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      );
+  }
+}
 
 function StoreBadge({
   href,
@@ -251,7 +318,7 @@ export default function WebsiteDemoPage() {
           <div className={styles.featureGrid}>
             {features.map((feature) => (
               <article key={feature.title} className={styles.featureCard}>
-                <div className={styles.featureIcon}>{feature.icon}</div>
+                <div className={styles.featureIcon}>{renderIcon(feature.icon)}</div>
                 <h3>{feature.title}</h3>
                 <p>{feature.copy}</p>
               </article>
@@ -320,14 +387,7 @@ export default function WebsiteDemoPage() {
             {benefitCards.map((card) => (
               <article key={card.title} className={styles.benefitCard}>
                 <div className={styles.benefitTopRow}>
-                  <div className={styles.benefitBadge}>{card.badge}</div>
-                  <div className={styles.benefitStars}>
-                    <span />
-                    <span />
-                    <span />
-                    <span />
-                    <span />
-                  </div>
+                  <div className={styles.benefitBadge}>{renderIcon(card.icon)}</div>
                 </div>
                 <p className={styles.benefitCopy}>{card.copy}</p>
                 <strong>{card.title}</strong>

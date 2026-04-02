@@ -410,6 +410,13 @@
   font-weight: 800;
 }
 
+.featureIcon svg,
+.benefitBadge svg {
+  width: 26px;
+  height: 26px;
+  display: block;
+}
+
 .featureCard h3,
 .benefitCard strong {
   display: block;
@@ -937,7 +944,7 @@
 
 .benefitTopRow {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 16px;
   align-items: center;
 }
@@ -954,18 +961,6 @@
   font-size: 0.86rem;
   font-weight: 800;
   box-shadow: 0 12px 24px rgba(15, 85, 200, 0.18);
-}
-
-.benefitStars {
-  display: flex;
-  gap: 6px;
-}
-
-.benefitStars span {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--lime), #ffc847);
 }
 
 .benefitCopy {
