@@ -63,7 +63,7 @@ export default function WebsiteDemoPrivacyPage() {
             progress history, send reminders, improve reliability, and help users get
             support when needed. Questions about this policy can be sent to
             {" "}
-            <a href="mailto:info@realnurturingfnp.com">info@realnurturingfnp.com</a>.
+            <a href="mailto:Realnurturingfnp@gmail.com">Realnurturingfnp@gmail.com</a>.
           </p>
           <p>
             As the app moves toward launch, this policy may expand on service providers,

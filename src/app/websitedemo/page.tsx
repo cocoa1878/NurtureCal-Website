@@ -360,7 +360,7 @@ export default function WebsiteDemoPage() {
 
               <p className={styles.waitlistSupport}>
                 Support questions can be sent to{" "}
-                <a href="mailto:info@realnurturingfnp.com">info@realnurturingfnp.com</a>.
+                <a href="mailto:Realnurturingfnp@gmail.com">Realnurturingfnp@gmail.com</a>.
               </p>
             </div>
 

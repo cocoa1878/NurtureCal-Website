@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { getSupabaseAdmin } from "@/lib/supabase-admin";
 
 type WaitlistPayload = {
   fullName?: string;
@@ -100,12 +101,33 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Please enter a valid email address." }, { status: 400 });
   }
 
-  const resend = new Resend(resendApiKey);
   const from = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
-  const to = process.env.CHECKLIST_TO_EMAIL || "info@realnurturingfnp.com";
-  const submittedAt = new Date().toLocaleString("en-US", { timeZone: "America/Chicago" });
+  const to = process.env.CHECKLIST_TO_EMAIL || "Realnurturingfnp@gmail.com";
+  const submittedAtIso = new Date().toISOString();
+  const submittedAt = new Date(submittedAtIso).toLocaleString("en-US", {
+    timeZone: "America/Chicago"
+  });
 
   try {
+    const resend = new Resend(resendApiKey);
+    const supabase = getSupabaseAdmin();
+
+    const { error: waitlistError } = await supabase.from("waitlist_signups").upsert(
+      {
+        full_name: fullName,
+        email,
+        source: "website",
+        updated_at: submittedAtIso
+      },
+      {
+        onConflict: "email"
+      }
+    );
+
+    if (waitlistError) {
+      throw new Error(`Failed to store waitlist signup: ${waitlistError.message}`);
+    }
+
     await resend.emails.send({
       from,
       to,

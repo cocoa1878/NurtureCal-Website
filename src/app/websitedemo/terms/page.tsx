@@ -52,7 +52,7 @@ export default function WebsiteDemoTermsPage() {
             <li>Accounts that violate the terms may be suspended or terminated</li>
             <li>Continued use constitutes acceptance of future updates to the terms</li>
             <li>The app is intended for consumer wellness support, not clinical treatment</li>
-            <li>Support questions can be sent to info@realnurturingfnp.com</li>
+            <li>Support questions can be sent to Realnurturingfnp@gmail.com</li>
           </ul>
         </section>
 
