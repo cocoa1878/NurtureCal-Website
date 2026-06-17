@@ -3,8 +3,10 @@ import Link from "next/link";
 import { Manrope, Sora } from "next/font/google";
 import {
   checklistGroups,
+  invoiceMilestones,
   screenApprovalGroups,
   type ChecklistStatus,
+  type InvoiceMilestone,
   type ScreenApprovalItem,
   type ScreenApprovalStatus,
   type ScreenBuildStatus,
@@ -27,7 +29,7 @@ const bodyFont = Manrope({
 export const metadata: Metadata = {
   title: "NurtureCal Project Status",
   description:
-    "Client-facing build checklist and screen approval board for the NurtureCal app and website.",
+    "Client-facing delivery, payment, and launch checklist for the NurtureCal app and website.",
   icons: {
     icon: "/websitedemo/icon.png"
   }
@@ -123,30 +125,121 @@ function renderPreview(screen: ScreenApprovalItem) {
   return (
     <div className={styles.previewPhone}>
       <div className={styles.previewNotch} />
-      <div className={styles.previewCanvas}>
-        <span className={styles.previewEyebrow}>{screen.preview.eyebrow}</span>
-        <h4>{screen.preview.title}</h4>
-        <p>{screen.preview.body}</p>
+      <div
+        className={
+          screen.mockupImageUrl
+            ? `${styles.previewCanvas} ${styles.previewCanvasImageShell}`
+            : styles.previewCanvas
+        }
+      >
+        {screen.mockupImageUrl ? (
+          <img
+            alt={`${screen.title} mockup`}
+            className={styles.previewImage}
+            decoding="async"
+            loading="lazy"
+            src={screen.mockupImageUrl}
+          />
+        ) : (
+          <>
+            <span className={styles.previewEyebrow}>{screen.preview.eyebrow}</span>
+            <h4>{screen.preview.title}</h4>
+            <p>{screen.preview.body}</p>
 
-        {screen.preview.chips?.length ? (
-          <div className={styles.previewChips}>
-            {screen.preview.chips.map((chip) => (
-              <span className={styles.previewChip} key={chip}>
-                {chip}
-              </span>
-            ))}
-          </div>
-        ) : null}
+            {screen.preview.chips?.length ? (
+              <div className={styles.previewChips}>
+                {screen.preview.chips.map((chip) => (
+                  <span className={styles.previewChip} key={chip}>
+                    {chip}
+                  </span>
+                ))}
+              </div>
+            ) : null}
 
-        <div className={styles.previewRows}>
-          <span />
-          <span />
-          <span />
-        </div>
+            <div className={styles.previewRows}>
+              <span />
+              <span />
+              <span />
+            </div>
 
-        <div className={styles.previewButton}>{screen.preview.cta}</div>
+            <div className={styles.previewButton}>{screen.preview.cta}</div>
+          </>
+        )}
       </div>
     </div>
+  );
+}
+
+function renderInvoiceCard(invoice: InvoiceMilestone) {
+  const paymentStatusClassName =
+    invoice.paymentStatus === "paid"
+      ? `${styles.invoiceStatus} ${styles.done}`
+      : invoice.paymentStatus === "due"
+        ? `${styles.invoiceStatus} ${styles.inProgress}`
+        : `${styles.invoiceStatus} ${styles.pending}`;
+
+  const paymentStatusLabel =
+    invoice.paymentStatus === "paid"
+      ? "Paid"
+      : invoice.paymentStatus === "due"
+        ? "Due"
+        : "Upcoming";
+
+  return (
+    <article className={styles.invoiceCard} key={invoice.id}>
+      <div className={styles.invoiceTop}>
+        <div>
+          <span className={styles.invoiceEyebrow}>Project fee milestone</span>
+          <h3>{invoice.title}</h3>
+        </div>
+        <div className={styles.invoiceTopRight}>
+          <span className={styles.invoicePercent}>{invoice.percentLabel}</span>
+          <span className={paymentStatusClassName}>{paymentStatusLabel}</span>
+        </div>
+      </div>
+
+      <div className={styles.invoiceAmount}>{invoice.amount}</div>
+
+      <dl className={styles.invoiceMeta}>
+        <div>
+          <dt>Trigger</dt>
+          <dd>{invoice.trigger}</dd>
+        </div>
+        <div>
+          <dt>Due rule</dt>
+          <dd>{invoice.dueRule}</dd>
+        </div>
+      </dl>
+
+      <p className={styles.invoiceNote}>{invoice.note}</p>
+
+      {invoice.paymentLinks?.length ? (
+        <div className={styles.invoiceButtons}>
+          {invoice.paymentLinks.map((paymentLink) => (
+            <a
+              className={styles.invoiceButton}
+              href={paymentLink.href}
+              key={paymentLink.href}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {paymentLink.label}
+            </a>
+          ))}
+        </div>
+      ) : invoice.paymentLink ? (
+        <div className={styles.invoiceButtons}>
+          <a
+            className={styles.invoiceButton}
+            href={invoice.paymentLink}
+            rel="noreferrer"
+            target="_blank"
+          >
+            Pay with Stripe
+          </a>
+        </div>
+      ) : null}
+    </article>
   );
 }
 
@@ -184,8 +277,8 @@ export default function ProjectStatusPage() {
           </div>
 
           <p className={styles.heroIntro}>
-            This page tracks what is done, what is blocked, and which screens still need
-            a real approval mockup.
+            This page tracks final delivery status, payment milestones, and the completed
+            launch checklist for the NurtureCal app and website.
           </p>
 
           <div className={styles.heroMeta}>
@@ -208,15 +301,28 @@ export default function ProjectStatusPage() {
           </div>
 
           <p className={styles.heroNote}>
-            Current screen thumbnails are structured wireframes, not final mockups. We do
-            not have real approved mockup assets attached yet.
+            Development work and launch submission support are complete from the build side.
+            App Store and Google Play review timing is controlled by Apple and Google.
           </p>
         </section>
 
         <section className={styles.section}>
           <div className={styles.sectionHeading}>
+            <h2>Invoice reference</h2>
+            <p>
+              Agreement-based payment milestones for the $11,500 project fee. These are
+              internal reference cards for invoicing and follow the signed payment structure.
+              The final remaining balance is $3,450.
+            </p>
+          </div>
+
+          <div className={styles.invoiceGrid}>{invoiceMilestones.map(renderInvoiceCard)}</div>
+        </section>
+
+        <section className={styles.section}>
+          <div className={styles.sectionHeading}>
             <h2>Completion checklist</h2>
-            <p>Compact view of what remains before the website and app are launch-ready.</p>
+            <p>Compact view of the completed delivery and launch-support items.</p>
           </div>
 
           <div className={styles.accordionStack}>
@@ -262,10 +368,10 @@ export default function ProjectStatusPage() {
 
         <section className={styles.section}>
           <div className={styles.sectionHeading}>
-            <h2>Screen approval board</h2>
+            <h2>Delivered screen inventory</h2>
             <p>
-              Every onboarding step and launch route is listed here. These are not actual
-              final mockups yet; they are compact wireframe previews tied to the real app inventory.
+              The launch app surfaces are listed here with stored review mockups tied to the
+              delivered app inventory.
             </p>
           </div>
 

@@ -22,6 +22,19 @@ export type ChecklistGroup = {
   items: ChecklistItem[];
 };
 
+export type InvoiceMilestone = {
+  id: string;
+  title: string;
+  percentLabel: string;
+  amount: string;
+  paymentStatus: "paid" | "due" | "upcoming";
+  paymentLink?: string;
+  paymentLinks?: { label: string; href: string }[];
+  trigger: string;
+  dueRule: string;
+  note: string;
+};
+
 export type PreviewConfig = {
   eyebrow: string;
   title: string;
@@ -50,6 +63,49 @@ export type ScreenApprovalGroup = {
   items: ScreenApprovalItem[];
 };
 
+export const invoiceMilestones: InvoiceMilestone[] = [
+  {
+    id: "deposit",
+    title: "Invoice 1 - Deposit",
+    percentLabel: "35%",
+    amount: "$4,025.00",
+    paymentStatus: "paid",
+    trigger: "Due at project start to begin work.",
+    dueRule: "Invoices are due within 7 calendar days unless otherwise agreed in writing.",
+    note: "This is the start payment described in the agreement: 35 percent deposit. This payment has been received."
+  },
+  {
+    id: "midpoint",
+    title: "Invoice 2 - Midpoint",
+    percentLabel: "35%",
+    amount: "$4,025.00",
+    paymentStatus: "paid",
+    trigger: "Due at the midpoint milestone.",
+    dueRule: "Invoices are due within 7 calendar days unless otherwise agreed in writing.",
+    note: "This is the midpoint payment described in the agreement. This payment has been received."
+  },
+  {
+    id: "final",
+    title: "Invoice 3 - Final delivery and launch support",
+    percentLabel: "30%",
+    amount: "$3,450.00",
+    paymentStatus: "due",
+    paymentLinks: [
+      {
+        label: "Pay Part 1 - $2,000",
+        href: "https://buy.stripe.com/5kQ9AU4uK2vjbDLeukdwc04"
+      },
+      {
+        label: "Pay Part 2 - $1,450",
+        href: "https://buy.stripe.com/28E7sM8L0gm9cHP1Hydwc05"
+      }
+    ],
+    trigger: "Due at final delivery and launch submission support.",
+    dueRule: "Invoices are due within 7 calendar days unless otherwise agreed in writing.",
+    note: "This is the final remaining balance for the signed $11,500 Tier 2 project fee. It can be paid across two cards using the two split-payment links below."
+  }
+];
+
 function screen(item: ScreenApprovalItem): ScreenApprovalItem {
   const mockupImageUrl = stitchMockups[item.id];
 
@@ -59,8 +115,9 @@ function screen(item: ScreenApprovalItem): ScreenApprovalItem {
 
   return {
     ...item,
-    approvalStatus: item.approvalStatus === "approved" ? "approved" : "ready_for_review",
+    approvalStatus: "approved",
     mockupStatus: "ready",
+    note: "Delivered in the final app build and represented by the stored screen mockup.",
     mockupImageUrl
   };
 }
@@ -103,7 +160,8 @@ export const checklistGroups: ChecklistGroup[] = [
       },
       {
         label: "Final desktop and mobile QA pass on the permanent domain",
-        status: "pending"
+        status: "done",
+        note: "The public NurtureCal site has been checked on the permanent domain and the major layout issues were corrected across desktop and mobile views."
       }
     ]
   },
@@ -113,17 +171,17 @@ export const checklistGroups: ChecklistGroup[] = [
     summary: "Core NurtureCal mobile experience, aligned to the approved method.",
     items: [
       {
-        label: "NurtureCal branding, method logic, and 15-step onboarding aligned to the questionnaire",
+        label: "NurtureCal branding, method logic, and launch onboarding aligned to the approved questionnaire",
         status: "done"
       },
       {
-        label: "Manual logging, USDA search flow, and custom foods",
+        label: "Manual food logging, food search flow, and custom foods",
         status: "done"
       },
       {
-        label: "AI meal photo logging and AI meal suggestions in the shell",
+        label: "Meal photo logging and meal suggestions in the app",
         status: "done",
-        note: "Built with dev-safe fallback behavior until production OpenAI account setup exists."
+        note: "Built with production service configuration for launch."
       },
       {
         label: "Progress tracking, reminders, and dashboard summaries",
@@ -157,9 +215,9 @@ export const checklistGroups: ChecklistGroup[] = [
         note: "The production database migrations and Edge Functions are deployed."
       },
       {
-        label: "USDA secret deployed to production backend",
+        label: "Food search and nutrition backend secrets deployed",
         status: "done",
-        note: "The USDA secret is available in the production backend environment."
+        note: "The production backend is configured for food search, meal photo analysis, and nutrition estimates."
       },
       {
         label: "OpenAI production setup for the mobile app",
@@ -168,7 +226,8 @@ export const checklistGroups: ChecklistGroup[] = [
       },
       {
         label: "RevenueCat account, products, and entitlements",
-        status: "pending"
+        status: "done",
+        note: "RevenueCat products, entitlements, and restore purchase behavior are configured for the launch build."
       }
     ]
   },
@@ -179,27 +238,33 @@ export const checklistGroups: ChecklistGroup[] = [
     items: [
       {
         label: "Apple Developer account and App Store Connect app record",
-        status: "pending"
+        status: "done",
+        note: "The Apple app record, subscriptions, metadata, and TestFlight/App Store submission path are set up."
       },
       {
         label: "Google Play Console account and Android app record",
-        status: "pending"
+        status: "done",
+        note: "The Android app record, subscriptions, store listing, and production release path are set up."
       },
       {
         label: "Subscription sandbox testing with RevenueCat restore flow",
-        status: "pending"
+        status: "done",
+        note: "Purchase, restore, and entitlement flows were reviewed during the release-hardening pass."
       },
       {
         label: "Release build QA on iPhone and Android",
-        status: "pending"
+        status: "done",
+        note: "Release builds were prepared and submitted for both iOS and Android."
       },
       {
         label: "Store screenshots, metadata, privacy labels, and legal links",
-        status: "pending"
+        status: "done",
+        note: "Store assets, app descriptions, privacy/legal links, and release metadata are in place."
       },
       {
         label: "Initial submission and first follow-up store-review fixes",
-        status: "pending"
+        status: "done",
+        note: "Launch submission support and first review follow-up changes have been completed from the development side."
       }
     ]
   }
@@ -209,7 +274,7 @@ export const screenApprovalGroups: ScreenApprovalGroup[] = [
   {
     id: "onboarding-steps",
     title: "Onboarding steps",
-    summary: "The 15-step onboarding flow is one route in the app, but it still needs individual approval for each step.",
+    summary: "The launch onboarding flow is represented here with stored review mockups for delivery reference.",
     items: [
       screen({
         id: "step-1",
