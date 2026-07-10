@@ -37,6 +37,13 @@ const cards = [
     copy: "See spend, installs, and cost per install.",
     tone: "gold",
   },
+  {
+    href: "/owner-guide/billing",
+    icon: "$",
+    title: "What invoices are due?",
+    copy: "See payment history and open secure invoices.",
+    tone: "teal",
+  },
 ] as const;
 
 export default async function OwnerGuidePage({ searchParams }: OwnerGuidePageProps) {

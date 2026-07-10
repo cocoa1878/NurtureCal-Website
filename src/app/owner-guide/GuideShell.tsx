@@ -5,7 +5,7 @@ import styles from "./owner-guide.module.css";
 
 type GuideShellProps = {
   children: ReactNode;
-  activeTopic?: "home" | "downloads" | "members" | "apple-ads";
+  activeTopic?: "home" | "downloads" | "members" | "apple-ads" | "billing";
 };
 
 const navigation = [
@@ -13,6 +13,7 @@ const navigation = [
   { href: "/owner-guide/downloads", icon: "↓", label: "Downloads", topic: "downloads" },
   { href: "/owner-guide/members", icon: "♥", label: "Members", topic: "members" },
   { href: "/owner-guide/apple-ads", icon: "↗", label: "Apple Ads", topic: "apple-ads" },
+  { href: "/owner-guide/billing", icon: "$", label: "Billing", topic: "billing" },
 ] as const;
 
 export default function GuideShell({ children, activeTopic = "home" }: GuideShellProps) {
