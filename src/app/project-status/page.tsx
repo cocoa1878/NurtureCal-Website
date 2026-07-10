@@ -12,7 +12,11 @@ import {
   type ScreenBuildStatus,
   type ScreenMockupStatus
 } from "@/lib/project-status";
+import LoginView from "../owner-guide/LoginView";
+import { isOwnerAuthenticated } from "../owner-guide/auth";
 import styles from "./page.module.css";
+
+export const dynamic = "force-dynamic";
 
 const displayFont = Sora({
   subsets: ["latin"],
@@ -32,7 +36,12 @@ export const metadata: Metadata = {
     "Client-facing delivery, payment, and launch checklist for the NurtureCal app and website.",
   icons: {
     icon: "/websitedemo/icon.png"
-  }
+  },
+  robots: { index: false, follow: false }
+};
+
+type ProjectStatusPageProps = {
+  searchParams: Promise<{ error?: string }>;
 };
 
 function getChecklistClassName(status: ChecklistStatus) {
@@ -243,7 +252,14 @@ function renderInvoiceCard(invoice: InvoiceMilestone) {
   );
 }
 
-export default function ProjectStatusPage() {
+export default async function ProjectStatusPage({ searchParams }: ProjectStatusPageProps) {
+  const authenticated = await isOwnerAuthenticated();
+  const query = await searchParams;
+
+  if (!authenticated) {
+    return <LoginView destination="/project-status" hasError={query.error === "incorrect-password"} />;
+  }
+
   const checklistItems = checklistGroups.flatMap((group) => group.items);
   const totalChecklistItems = checklistItems.length;
   const doneItems = checklistItems.filter((item) => item.status === "done").length;

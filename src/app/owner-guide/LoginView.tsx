@@ -2,8 +2,18 @@ import { signInToOwnerGuide } from "./actions";
 import { isOwnerGuideConfigured } from "./auth";
 import styles from "./owner-guide.module.css";
 
-export default function LoginView({ hasError }: { hasError: boolean }) {
+type LoginViewProps = {
+  hasError: boolean;
+  destination?: "/owner-guide" | "/project-status";
+};
+
+export default function LoginView({
+  hasError,
+  destination = "/owner-guide",
+}: LoginViewProps) {
   const configured = isOwnerGuideConfigured();
+  const isProjectStatus = destination === "/project-status";
+  const pageName = isProjectStatus ? "project status" : "owner guide";
 
   return (
     <main className={styles.loginPage}>
@@ -12,12 +22,13 @@ export default function LoginView({ hasError }: { hasError: boolean }) {
           <span className={styles.brandMark} aria-hidden="true"><i /></span>
           <span>NurtureCal</span>
         </div>
-        <p className={styles.loginEyebrow}>Private owner guide</p>
-        <h1>Everything you need, in one calm place.</h1>
-        <p className={styles.loginIntro}>Enter the private guide password. This device will stay signed in for 30 days.</p>
+        <p className={styles.loginEyebrow}>Private {pageName}</p>
+        <h1>{isProjectStatus ? "Your private project status." : "Everything you need, in one calm place."}</h1>
+        <p className={styles.loginIntro}>Enter the private password. This device will stay signed in for 30 days.</p>
 
         {configured ? (
           <form action={signInToOwnerGuide} className={styles.loginForm}>
+            <input name="returnTo" type="hidden" value={destination} />
             <input
               aria-hidden="true"
               autoComplete="username"
@@ -28,7 +39,7 @@ export default function LoginView({ hasError }: { hasError: boolean }) {
               type="text"
               value="Corinne"
             />
-            <label htmlFor="owner-password">Guide password</label>
+            <label htmlFor="owner-password">Password</label>
             <input
               aria-describedby={hasError ? "password-error" : undefined}
               autoComplete="current-password"
@@ -40,12 +51,12 @@ export default function LoginView({ hasError }: { hasError: boolean }) {
               type="password"
             />
             {hasError ? <p className={styles.formError} id="password-error">That password did not match. Please try again.</p> : null}
-            <button type="submit">Open my owner guide <span aria-hidden="true">→</span></button>
+            <button type="submit">Open {isProjectStatus ? "project status" : "my owner guide"} <span aria-hidden="true">→</span></button>
           </form>
         ) : (
           <div className={styles.setupNotice}>
-            <strong>The private guide is not configured yet.</strong>
-            <span>Add the owner-guide password and session secret to the hosting environment before sharing this page.</span>
+            <strong>The private page is not configured yet.</strong>
+            <span>Add the private password and session secret to the hosting environment before sharing this page.</span>
           </div>
         )}
         <p className={styles.privacyNote}>No account password, customer information, or payment details are stored on this page.</p>
