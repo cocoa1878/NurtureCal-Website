@@ -1,0 +1,378 @@
+.shell {
+  --deep: #174f4b;
+  --teal: #1c6964;
+  --teal-dark: #003431;
+  --cream: #fbf9f4;
+  --paper: #ffffff;
+  --ink: #173633;
+  --muted: #627471;
+  --line: rgba(28, 105, 100, 0.14);
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  color: var(--ink);
+  background: var(--cream);
+  font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 26px 24px;
+  color: white;
+  background: var(--deep);
+}
+
+.brand,
+.loginBrand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: inherit;
+  font: 600 22px/1 Georgia, serif;
+  text-decoration: none;
+}
+
+.brandMark {
+  position: relative;
+  display: inline-block;
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #dff0e8;
+}
+
+.brandMark i {
+  position: absolute;
+  width: 13px;
+  height: 18px;
+  top: 7px;
+  left: 10px;
+  border-radius: 100% 0 100% 0;
+  background: var(--teal);
+  transform: rotate(-18deg);
+}
+
+.navigation {
+  display: grid;
+  gap: 9px;
+  margin-top: 55px;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 13px;
+  border-radius: 11px;
+  color: #c8ded9;
+  text-decoration: none;
+  transition: color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.navLink:hover {
+  color: white;
+  transform: translateX(2px);
+}
+
+.navLinkActive {
+  color: white;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.navIcon {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.sidebarHelp {
+  display: grid;
+  gap: 6px;
+  margin-top: auto;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  color: #c8ded9;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.sidebarHelp strong { color: white; }
+.signOutForm { margin-top: 13px; }
+.signOutButton {
+  width: 100%;
+  border: 0;
+  padding: 9px;
+  color: #c8ded9;
+  background: transparent;
+  cursor: pointer;
+}
+
+.main {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  padding: 40px clamp(28px, 6vw, 88px) 70px;
+}
+
+.main::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: 360px;
+  height: 360px;
+  right: -180px;
+  top: -180px;
+  border: 70px solid #edf5ed;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.topbar,
+.guideTopbar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.guideTopbar a { color: var(--teal); font-weight: 700; text-decoration: none; }
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: white;
+  background: var(--teal);
+  font-weight: 700;
+}
+
+.homeHero {
+  position: relative;
+  z-index: 1;
+  max-width: 880px;
+  margin-top: 75px;
+}
+
+.eyebrow,
+.sectionLabel,
+.loginEyebrow {
+  margin: 0;
+  color: #657b76;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.homeHero h1,
+.guideHeader h1,
+.loginCard h1 {
+  margin: 14px 0 15px;
+  color: var(--teal-dark);
+  font: 600 clamp(40px, 5.5vw, 68px)/1.02 Georgia, serif;
+  letter-spacing: -0.045em;
+}
+
+.heroIntro,
+.guideHeader > p:last-child,
+.loginIntro {
+  max-width: 640px;
+  margin: 0;
+  color: #5e706d;
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.questionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+  margin-top: 40px;
+}
+
+.questionCard {
+  position: relative;
+  min-height: 236px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  color: var(--ink);
+  background: white;
+  box-shadow: 0 9px 25px rgba(22, 54, 51, 0.05);
+  text-decoration: none;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.questionCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(22, 54, 51, 0.1);
+}
+
+.questionIcon {
+  display: grid;
+  place-items: center;
+  width: 45px;
+  height: 45px;
+  margin-bottom: 31px;
+  border-radius: 14px;
+  color: #0f5752;
+  background: #e2f1ed;
+  font-size: 20px;
+}
+
+.questionCard[data-tone="orange"] .questionIcon { color: #a35620; background: #fff0df; }
+.questionCard[data-tone="gold"] .questionIcon { color: #6d5a18; background: #f7efc9; }
+.questionCard strong { display: block; margin-bottom: 8px; font: 600 18px/1.2 Georgia, serif; }
+.questionCard > span:nth-of-type(2) { display: block; color: #6b7b78; font-size: 13px; line-height: 1.5; }
+.questionCard > i { position: absolute; right: 20px; bottom: 20px; color: var(--teal); font-style: normal; }
+.returnNote { display: flex; align-items: center; gap: 11px; margin-top: 26px; color: #61716e; font-size: 13px; }
+.returnNote i { width: 7px; height: 7px; border-radius: 50%; background: #5ba19b; }
+
+.guideArticle {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 58px auto 0;
+}
+
+.guideHeader { max-width: 760px; }
+.guideHeader h1 { font-size: clamp(38px, 5vw, 62px); }
+.answerCard {
+  display: grid;
+  grid-template-columns: 145px 1fr;
+  gap: 20px;
+  margin-top: 34px;
+  padding: 21px 23px;
+  border: 1px solid #d6e8e4;
+  border-radius: 16px;
+  background: #edf7f4;
+}
+.answerCard > span { color: var(--teal); font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+.answerCard p { margin: 0; line-height: 1.6; }
+.guideSections { display: grid; gap: 25px; margin-top: 35px; }
+.guideSection {
+  display: grid;
+  grid-template-columns: minmax(280px, .9fr) minmax(340px, 1.1fr);
+  gap: 29px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255,255,255,.86);
+  box-shadow: 0 12px 36px rgba(22,54,51,.05);
+}
+.sectionLabel { color: var(--teal); }
+.sectionCopy h2, .guideFooter h2 { margin: 8px 0 9px; color: var(--teal-dark); font: 600 28px/1.12 Georgia, serif; letter-spacing: -.025em; }
+.sectionIntro { margin: 0; color: var(--muted); line-height: 1.55; }
+.sectionCopy ol { display: grid; gap: 12px; margin: 23px 0; padding: 0; list-style: none; }
+.sectionCopy li { display: grid; grid-template-columns: 31px 1fr; gap: 11px; align-items: center; line-height: 1.45; }
+.sectionCopy li b { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; color: white; background: var(--teal); font-size: 12px; }
+.destinationButton, .guideFooter a {
+  display: inline-flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 17px;
+  border-radius: 11px;
+  color: white;
+  background: var(--teal);
+  font-weight: 800;
+  text-decoration: none;
+}
+.screenExample { align-self: start; padding: 9px; border: 1px solid #d3e0dd; border-radius: 16px; background: #e5efed; }
+.browserChrome { display: flex; align-items: center; gap: 6px; padding: 5px 6px 13px; }
+.browserChrome i { width: 8px; height: 8px; border-radius: 50%; background: #88a09b; }
+.browserChrome span { flex: 1; margin-left: 7px; padding: 7px 10px; border-radius: 7px; color: #718783; background: #d8e6e3; font-size: 10px; }
+.browserContent { padding: 18px; border-radius: 10px; background: white; }
+.browserHeading { display: flex; justify-content: space-between; padding-bottom: 12px; border-bottom: 1px solid #dfe5e3; font-weight: 800; }
+.browserHeading small { font-weight: 600; }
+.mockChart { display: flex; align-items: flex-end; gap: 8px; height: 118px; margin: 23px 0 14px; padding: 0 7px; border-bottom: 1px solid #cfdbd8; }
+.mockChart i { flex: 1; border-radius: 5px 5px 0 0; background: #72aaa0; }
+.lookHere { display: flex; gap: 11px; padding: 12px; border-radius: 10px; background: #fff0dd; font-size: 12px; line-height: 1.45; }
+.lookHere > b { color: #d76e23; font-size: 10px; }
+.lookHere span { display: grid; }
+.lookHere small { color: #746c61; }
+.sectionNote { margin: 9px 3px 1px; color: #5f716d; font-size: 12px; line-height: 1.5; }
+.guideFooter { margin-top: 32px; padding: 30px; border-radius: 19px; color: white; background: var(--deep); text-align: center; }
+.guideFooter > span { color: #aed0ca; font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.guideFooter h2 { margin: 9px 0 18px; color: white; }
+.guideFooter a { color: var(--teal-dark); background: white; }
+
+.loginPage {
+  --teal: #1c6964;
+  --teal-dark: #003431;
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 28px;
+  color: #173633;
+  background: #174f4b;
+  font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+}
+.loginCard { position: relative; z-index: 2; width: min(500px, 100%); padding: 42px; border-radius: 26px; background: #fbf9f4; box-shadow: 0 28px 90px rgba(0,25,23,.28); }
+.loginBrand { color: var(--teal-dark); }
+.loginEyebrow { margin-top: 48px; }
+.loginCard h1 { font-size: clamp(38px, 6vw, 56px); }
+.loginIntro { font-size: 16px; }
+.loginForm { display: grid; gap: 10px; margin-top: 27px; }
+.usernameHelper { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
+.loginForm label { font-size: 13px; font-weight: 800; }
+.loginForm input { width: 100%; border: 1px solid #cad9d5; border-radius: 12px; padding: 14px 15px; color: #173633; background: white; font: inherit; font-size: 16px; outline: none; }
+.loginForm input:focus { border-color: var(--teal); box-shadow: 0 0 0 4px rgba(28,105,100,.12); }
+.loginForm button { display: flex; justify-content: space-between; margin-top: 5px; border: 0; border-radius: 12px; padding: 15px 17px; color: white; background: var(--teal); font: inherit; font-weight: 800; cursor: pointer; }
+.formError { margin: 0; color: #aa3e34; font-size: 13px; }
+.privacyNote { margin: 24px 0 0; color: #73827f; font-size: 12px; line-height: 1.5; }
+.setupNotice { display: grid; gap: 6px; margin-top: 26px; padding: 16px; border: 1px solid #e3c894; border-radius: 12px; color: #7b5b20; background: #fff5df; line-height: 1.5; }
+.loginDecoration span { position: absolute; border-radius: 50%; }
+.loginDecoration span:first-child { width: 440px; height: 440px; left: -210px; top: -230px; border: 80px solid rgba(223,240,232,.13); }
+.loginDecoration span:last-child { width: 330px; height: 330px; right: -160px; bottom: -180px; background: #f4ad69; opacity: .82; }
+
+@media (max-width: 920px) {
+  .shell { grid-template-columns: 1fr; }
+  .sidebar { position: relative; z-index: 10; width: 100%; height: auto; display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 15px 20px; }
+  .navigation { grid-column: 1 / -1; display: flex; gap: 7px; margin-top: 14px; overflow-x: auto; }
+  .navLink { padding: 9px 11px; white-space: nowrap; }
+  .navIcon { display: none; }
+  .sidebarHelp { display: none; }
+  .signOutForm { grid-column: 2; grid-row: 1; margin: 0; }
+  .signOutButton { width: auto; }
+  .questionGrid { grid-template-columns: 1fr 1fr; }
+  .questionCard:last-child { grid-column: 1 / -1; }
+  .guideSection { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 620px) {
+  .navigation { display: grid; grid-template-columns: 1fr 1fr; width: 100%; overflow: visible; }
+  .navLink { justify-content: center; }
+  .main { padding: 28px 18px 55px; }
+  .homeHero { margin-top: 50px; }
+  .questionGrid { grid-template-columns: 1fr; }
+  .questionCard:last-child { grid-column: auto; }
+  .questionCard { min-height: 190px; }
+  .questionIcon { margin-bottom: 19px; }
+  .answerCard { grid-template-columns: 1fr; gap: 8px; }
+  .guideArticle { margin-top: 43px; }
+  .guideSection { padding: 20px; }
+  .screenExample { order: -1; }
+  .loginPage { padding: 14px; }
+  .loginCard { padding: 28px 22px; border-radius: 21px; }
+  .loginEyebrow { margin-top: 38px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navLink, .questionCard { transition: none; }
+}
