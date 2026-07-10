@@ -89,20 +89,10 @@ export const invoiceMilestones: InvoiceMilestone[] = [
     title: "Invoice 3 - Final delivery and launch support",
     percentLabel: "30%",
     amount: "$3,450.00",
-    paymentStatus: "due",
-    paymentLinks: [
-      {
-        label: "Pay Part 1 - $2,000",
-        href: "https://buy.stripe.com/5kQ9AU4uK2vjbDLeukdwc04"
-      },
-      {
-        label: "Pay Part 2 - $1,450",
-        href: "https://buy.stripe.com/28E7sM8L0gm9cHP1Hydwc05"
-      }
-    ],
+    paymentStatus: "paid",
     trigger: "Due at final delivery and launch submission support.",
     dueRule: "Invoices are due within 7 calendar days unless otherwise agreed in writing.",
-    note: "This is the final remaining balance for the signed $11,500 Tier 2 project fee. It can be paid across two cards using the two split-payment links below."
+    note: "This is the final balance for the signed $11,500 Tier 2 project fee. This payment has been received."
   }
 ];
 

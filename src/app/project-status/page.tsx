@@ -328,7 +328,7 @@ export default async function ProjectStatusPage({ searchParams }: ProjectStatusP
             <p>
               Agreement-based payment milestones for the $11,500 project fee. These are
               internal reference cards for invoicing and follow the signed payment structure.
-              The final remaining balance is $3,450.
+              All three project-fee milestones are marked paid.
             </p>
           </div>
 
