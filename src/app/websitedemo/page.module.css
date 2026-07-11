@@ -986,6 +986,28 @@
   gap: 12px 26px;
 }
 
+.poweredBy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.poweredBy img {
+  width: 114px;
+  height: auto;
+  opacity: 0.88;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.poweredBy:hover img {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
 .footerBadges {
   display: flex;
   flex-direction: column;

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Manrope, Sora } from "next/font/google";
-import { WaitlistForm } from "@/components/waitlist-form";
 import styles from "./page.module.css";
 
 const displayFont = Sora({
@@ -123,6 +122,11 @@ const faqs = [
   }
 ];
 
+const storeLinks = {
+  apple: "https://apps.apple.com/us/app/nurturecal-food-tracker/id6767274219",
+  google: "https://play.google.com/store/apps/details?id=com.nurturecal.app",
+} as const;
+
 function renderIcon(icon: FeatureIconKey | BenefitIconKey) {
   switch (icon) {
     case "balanced_plate":
@@ -204,7 +208,7 @@ function StoreBadge({
         src={imageSrc}
         width={imageWidth}
       />
-      <span className={styles.storeBadgeAssistive}>Coming soon on {platform}</span>
+      <span className={styles.storeBadgeAssistive}>Download NurtureCal on {platform}</span>
     </a>
   );
 }
@@ -246,8 +250,8 @@ export default function WebsiteDemoPage() {
                   <Link href="/privacy">Privacy</Link>
                 </nav>
 
-                <a className={styles.headerButton} href="#waitlist">
-                  Join Waitlist
+                <a className={styles.headerButton} href="#download">
+                  Download App
                 </a>
               </header>
 
@@ -262,8 +266,8 @@ export default function WebsiteDemoPage() {
                 </p>
 
                 <div className={styles.heroActions}>
-                  <a className={styles.primaryButton} href="#waitlist">
-                    Join Waitlist
+                  <a className={styles.primaryButton} href="#download">
+                    Download App
                   </a>
                   <a className={styles.secondaryButton} href="#features">
                     Explore Features
@@ -275,11 +279,11 @@ export default function WebsiteDemoPage() {
                   designed by a healthcare professional.
                 </p>
 
-                <div className={styles.storeBadgeGroup}>
-                  <p className={styles.storeBadgeLabel}>Coming Soon</p>
+                <div className={styles.storeBadgeGroup} id="download">
+                  <p className={styles.storeBadgeLabel}>Available now</p>
                   <div className={styles.storeBadgeRow}>
                     <StoreBadge
-                      href="#waitlist"
+                      href={storeLinks.apple}
                       imageAlt="Download on the App Store"
                       imageHeight={320}
                       imageSrc="/websitedemo/app-store-badge.png"
@@ -287,7 +291,7 @@ export default function WebsiteDemoPage() {
                       platform="App Store"
                     />
                     <StoreBadge
-                      href="#waitlist"
+                      href={storeLinks.google}
                       imageAlt="Get it on Google Play"
                       imageHeight={670}
                       imageSrc="/websitedemo/google-play-badge.png"
@@ -411,28 +415,6 @@ export default function WebsiteDemoPage() {
           </div>
         </section>
 
-        <section className={`${styles.section} ${styles.waitlistSection}`} id="waitlist">
-          <div className={styles.waitlistPanel}>
-            <div className={styles.waitlistCopy}>
-              <p className={styles.supportKicker}>Join the waitlist</p>
-              <h2>Get launch updates and early access news.</h2>
-              <p>
-                Join the NurtureCal waitlist for launch updates, early access news,
-                and the first invitation when the app opens.
-              </p>
-
-              <ul className={styles.waitlistList}>
-                <li>Be first to hear when early access opens</li>
-                <li>See launch updates as the app gets closer</li>
-                <li>Stay connected without committing to anything yet</li>
-              </ul>
-
-            </div>
-
-            <WaitlistForm />
-          </div>
-        </section>
-
         <footer className={styles.footer} id="support">
           <div className={styles.footerBrand}>
             <Image alt="NurtureCal icon" height={42} src="/websitedemo/icon.png" width={42} />
@@ -442,16 +424,21 @@ export default function WebsiteDemoPage() {
           <div className={styles.footerLinks}>
             <a href="#features">Features</a>
             <a href="#how-it-works">How It Works</a>
-            <a href="#waitlist">Waitlist</a>
+            <a href="#download">Download</a>
             <Link href="/privacy">Privacy</Link>
             <Link href="/terms">Terms</Link>
           </div>
 
+          <a className={styles.poweredBy} href="https://mesquared.ai" rel="noreferrer" target="_blank">
+            <span>Powered by</span>
+            <Image alt="MeSquared" height={27} src="/mesquared-logo.svg" width={152} />
+          </a>
+
           <div className={styles.footerBadges}>
-            <p className={styles.storeBadgeLabel}>Coming Soon</p>
+            <p className={styles.storeBadgeLabel}>Available now</p>
             <div className={styles.storeBadgeRow}>
               <StoreBadge
-                href="#waitlist"
+                href={storeLinks.apple}
                 imageAlt="Download on the App Store"
                 imageHeight={320}
                 imageSrc="/websitedemo/app-store-badge.png"
@@ -459,7 +446,7 @@ export default function WebsiteDemoPage() {
                 platform="App Store"
               />
               <StoreBadge
-                href="#waitlist"
+                href={storeLinks.google}
                 imageAlt="Get it on Google Play"
                 imageHeight={670}
                 imageSrc="/websitedemo/google-play-badge.png"
