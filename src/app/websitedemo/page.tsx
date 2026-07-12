@@ -17,15 +17,41 @@ const bodyFont = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "NurtureCal | Balanced nutrition for real life",
+  title: {
+    absolute: "NurtureCal | Balanced Nutrition Food Tracker"
+  },
   description:
-    "NurtureCal is a balanced nutrition app built around protein, carbs, and vegetables, with realistic tracking and a simple structure that works in real life.",
+    "NurtureCal is a balanced nutrition food tracker for adults: set calorie and macro targets, log meals from food search or a photo, save meal ideas, and see your progress.",
+  alternates: {
+    canonical: "/"
+  },
+  openGraph: {
+    title: "NurtureCal | Balanced Nutrition Food Tracker",
+    description:
+      "Set calorie and macro targets, log meals from food search or a photo, save meal ideas, and see your progress with a balanced approach to nutrition.",
+    url: "/",
+    images: [
+      {
+        url: "/websitedemo/homepage-hero-v2.jpg",
+        width: 2048,
+        height: 1152,
+        alt: "Woman preparing vegetables in a bright kitchen"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "NurtureCal | Balanced Nutrition Food Tracker",
+    description:
+      "A balanced food tracker with personalized targets, flexible meal logging, and progress tracking.",
+    images: ["/websitedemo/homepage-hero-v2.jpg"]
+  },
   icons: {
     icon: "/websitedemo/icon.png"
   }
 };
 
-type FeatureIconKey = "balanced_plate" | "meal_structure" | "clinical_support";
+type FeatureIconKey = "balanced_plate" | "meal_structure" | "progress";
 type BenefitIconKey = "target" | "carb_balance" | "clarity" | "progress";
 
 const stats = [
@@ -35,11 +61,11 @@ const stats = [
   },
   {
     value: "3 ways to log",
-    label: "Search USDA foods, save custom foods, or review a meal photo before logging."
+    label: "Search food results, save custom foods, or review a meal photo before logging."
   },
   {
-    value: "Clinician-informed",
-    label: "The method is shaped by a healthcare professional and built for real-life follow-through."
+    value: "Personalized targets",
+    label: "Guided onboarding turns your details into daily calorie and macro targets."
   }
 ];
 
@@ -56,15 +82,15 @@ const features: Array<{
   },
   {
     icon: "meal_structure",
-    title: "Simple meal structure",
+    title: "Log meals your way",
     copy:
-      "Every meal is built around protein, carbohydrates, and vegetables so healthy eating feels clear, not complicated."
+      "Search food results, save your own custom foods, or review a meal photo before it goes into your log."
   },
   {
-    icon: "clinical_support",
-    title: "Healthcare-professional design",
+    icon: "progress",
+    title: "Keep progress in view",
     copy:
-      "NurtureCal is grounded in the practical guidance a licensed healthcare professional uses with real patients."
+      "See your daily targets alongside food logs, weight, and body measurements without adding more clutter."
   }
 ];
 
@@ -108,12 +134,12 @@ const faqs = [
   {
     question: "What can I log in the app?",
     answer:
-      "You can log meals through USDA food search, custom foods, and meal photo review. The app also keeps weight and basic body measurements visible over time."
+      "You can log meals through food search, custom foods, and meal photo review. The app also keeps weight and basic body measurements visible over time."
   },
   {
-    question: "Will there be a free trial?",
+    question: "Is NurtureCal medical care?",
     answer:
-      "Yes. The launch plan includes a 7-day free trial on the annual plan, with monthly and annual subscription options."
+      "No. NurtureCal is a consumer wellness app for general nutrition support. It does not provide medical diagnosis, treatment, or individualized clinical care."
   },
   {
     question: "Who is NurtureCal designed for?",
@@ -126,6 +152,40 @@ const storeLinks = {
   apple: "https://apps.apple.com/us/app/nurturecal-food-tracker/id6767274219",
   google: "https://play.google.com/store/apps/details?id=com.nurturecal.app",
 } as const;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      name: "NurtureCal",
+      applicationCategory: "HealthApplication",
+      operatingSystem: "iOS, Android",
+      url: "https://www.nurturecal.com/",
+      image: "https://www.nurturecal.com/websitedemo/icon.png",
+      description:
+        "A balanced nutrition food tracker for adults with personalized calorie and macro targets, flexible meal logging, meal ideas, and progress tracking.",
+      featureList: [
+        "Personalized calorie and macro targets",
+        "Food search and custom foods",
+        "Meal photo review before logging",
+        "Meal ideas",
+        "Weight and body measurement tracking"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer
+        }
+      }))
+    }
+  ]
+};
 
 function renderIcon(icon: FeatureIconKey | BenefitIconKey) {
   switch (icon) {
@@ -143,13 +203,6 @@ function renderIcon(icon: FeatureIconKey | BenefitIconKey) {
           <rect x="5" y="4.5" width="14" height="15" rx="3" fill="none" stroke="currentColor" strokeWidth="1.75" />
           <path d="M9 8.75h6M9 12h6M9 15.25h3.5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
           <path d="m6.9 8.7.9.9 1.6-1.8" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      );
-    case "clinical_support":
-      return (
-        <svg aria-hidden="true" viewBox="0 0 24 24">
-          <path d="M12 4.25 6.5 6.4v4.9c0 3.45 2.15 6.6 5.5 8.45 3.35-1.85 5.5-5 5.5-8.45V6.4Z" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinejoin="round" />
-          <path d="M12 8.35v5.1M9.45 10.9h5.1" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
         </svg>
       );
     case "target":
@@ -216,6 +269,10 @@ function StoreBadge({
 export default function WebsiteDemoPage() {
   return (
     <main className={`${styles.page} ${displayFont.variable} ${bodyFont.variable}`}>
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        type="application/ld+json"
+      />
       <div className={styles.shell}>
         <section className={styles.heroSection}>
           <div className={styles.heroStage}>
@@ -257,12 +314,12 @@ export default function WebsiteDemoPage() {
 
               <div className={styles.heroCopy}>
                 <p className={styles.kicker}>Balanced nutrition for real life</p>
-                <h1>A simple, balanced way to eat - no carb cutting, just real structure that works.</h1>
+                <h1>A balanced food tracker for real life.</h1>
                 <p className={styles.heroLead}>
-                  NurtureCal uses a simple, sustainable approach to nutrition:
-                  every meal is built with protein, carbohydrates, and vegetables.
-                  The focus is balance, portion control, and consistency so weight
-                  loss feels more doable long term.
+                  Set a realistic calorie and macro target, then log meals with food
+                  search, custom foods, or a photo you review before saving. Build
+                  more balanced meals with protein, carbs, and vegetables - without
+                  cutting foods you enjoy out of the picture.
                 </p>
 
                 <div className={styles.heroActions}>
@@ -275,8 +332,7 @@ export default function WebsiteDemoPage() {
                 </div>
 
                 <p className={styles.heroNote}>
-                  Balanced eating with carbs, a simple daily structure, and support
-                  designed by a healthcare professional.
+                  Available now for iPhone and Android.
                 </p>
 
                 <div className={styles.storeBadgeGroup} id="download">
@@ -356,9 +412,9 @@ export default function WebsiteDemoPage() {
 
             <ul className={styles.showcaseList}>
               <li>Start with guided calorie and macro targets from onboarding</li>
-              <li>Log meals with USDA search, custom foods, or photo review</li>
+              <li>Log meals with food search, custom foods, or photo review</li>
               <li>Use the protein + carb + veggies method to build balanced plates</li>
-              <li>Track weight and measurements without clutter or overwhelm</li>
+              <li>Save meal ideas and track weight and measurements over time</li>
             </ul>
 
             <div className={styles.showcasePhone}>
@@ -380,10 +436,11 @@ export default function WebsiteDemoPage() {
         <section className={styles.section}>
           <div className={styles.supportHeading}>
             <p className={styles.supportKicker}>Built for follow-through</p>
-            <h2>The routine is designed for real life, not perfect days.</h2>
+            <h2>Keep the essentials in one simple routine.</h2>
             <p className={styles.supportIntro}>
-              Some users following the method consistently reported losing an average
-              of 10-15 lbs within 8-12 weeks. Individual results vary.
+              NurtureCal brings daily targets, flexible food logging, meal ideas, and
+              progress tracking together for general wellness support. It is not a
+              substitute for medical care or individualized clinical advice.
             </p>
           </div>
 
@@ -425,6 +482,7 @@ export default function WebsiteDemoPage() {
             <a href="#features">Features</a>
             <a href="#how-it-works">How It Works</a>
             <a href="#download">Download</a>
+            <a href="mailto:info@realnurturingfnp.com">Support</a>
             <Link href="/privacy">Privacy</Link>
             <Link href="/terms">Terms</Link>
           </div>

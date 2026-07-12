@@ -17,7 +17,10 @@ const bodyFont = Manrope({
 
 export const metadata: Metadata = {
   title: "NurtureCal Privacy Policy",
-  description: "Privacy policy for the NurtureCal website, waitlist, and app experience operated by Copeland Legacy LLC."
+  description: "Privacy policy for the NurtureCal website, waitlist, and app experience operated by Copeland Legacy LLC.",
+  alternates: {
+    canonical: "/privacy"
+  }
 };
 
 export default function WebsiteDemoPrivacyPage() {
@@ -86,7 +89,7 @@ export default function WebsiteDemoPrivacyPage() {
             <li>Supabase for authentication, database storage, and backend functions</li>
             <li>Resend for waitlist and transactional email delivery</li>
             <li>OpenAI for optional AI-powered meal photo analysis and meal suggestions</li>
-            <li>USDA FoodData Central for food-search data</li>
+            <li>FatSecret for food-search data</li>
             <li>Apple, Google, and RevenueCat for platform billing, subscription management, and app distribution when those services are used</li>
             <li>Professional advisers, regulators, or law enforcement when required to protect rights, safety, or legal compliance</li>
           </ul>

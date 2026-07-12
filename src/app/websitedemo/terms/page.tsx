@@ -17,7 +17,10 @@ const bodyFont = Manrope({
 
 export const metadata: Metadata = {
   title: "NurtureCal Terms of Service",
-  description: "Terms of service for the NurtureCal website and app from Copeland Legacy LLC."
+  description: "Terms of service for the NurtureCal website and app from Copeland Legacy LLC.",
+  alternates: {
+    canonical: "/terms"
+  }
 };
 
 export default function WebsiteDemoTermsPage() {

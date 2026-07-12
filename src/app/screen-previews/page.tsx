@@ -28,7 +28,8 @@ export const metadata: Metadata = {
     "Approval gallery for the NurtureCal app screens, using Stitch-generated mockups tied to the real route inventory.",
   icons: {
     icon: "/websitedemo/icon.png"
-  }
+  },
+  robots: { index: false, follow: false }
 };
 
 function getBuildClassName(status: ScreenBuildStatus) {
