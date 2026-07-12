@@ -430,7 +430,7 @@ export default function WebsiteDemoPage() {
           </div>
 
           <a className={styles.poweredBy} href="https://mesquared.ai" rel="noreferrer" target="_blank">
-            <span>Powered by</span>
+            <span>Email Marketing Powered by</span>
             <Image alt="MeSquared" height={27} src="/mesquared-logo.svg" width={152} />
           </a>
 
