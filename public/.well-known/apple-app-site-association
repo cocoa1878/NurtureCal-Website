@@ -1,0 +1,19 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "6FST5RS3HH.com.nurturecal.app",
+        "components": [
+          {
+            "/": "/auth/reset-password",
+            "comment": "Open NurtureCal password recovery links in the iOS app"
+          }
+        ],
+        "paths": [
+          "/auth/reset-password"
+        ]
+      }
+    ]
+  }
+}
