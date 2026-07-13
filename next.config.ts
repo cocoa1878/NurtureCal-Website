@@ -20,8 +20,16 @@ const nextConfig: NextConfig = {
         source: "/auth/reset-password",
         headers: [
           {
+            key: "Cache-Control",
+            value: "private, no-store, max-age=0"
+          },
+          {
             key: "Referrer-Policy",
             value: "no-referrer"
+          },
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff"
           },
           {
             key: "X-Robots-Tag",
