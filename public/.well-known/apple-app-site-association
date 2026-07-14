@@ -7,11 +7,18 @@
         "components": [
           {
             "/": "/auth/reset-password",
-            "comment": "Open NurtureCal password recovery links in the iOS app"
+            "exclude": true,
+            "comment": "Keep password recovery on the NurtureCal website"
+          },
+          {
+            "/": "/auth/reset-password/*",
+            "exclude": true,
+            "comment": "Keep password recovery subpaths on the NurtureCal website"
           }
         ],
         "paths": [
-          "/auth/reset-password"
+          "NOT /auth/reset-password",
+          "NOT /auth/reset-password/*"
         ]
       }
     ]
