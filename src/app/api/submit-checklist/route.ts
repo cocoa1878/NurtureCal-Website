@@ -47,7 +47,7 @@ function renderEmailHtml(values: ChecklistValues, submittedAt: string) {
     <div style="background:#f2f7f6;padding:28px;font-family:Segoe UI,Trebuchet MS,sans-serif;color:#203639;">
       <div style="max-width:860px;margin:0 auto;background:#ffffff;border:1px solid #d6e1de;border-radius:20px;padding:28px;">
         <p style="margin:0 0 10px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#5d7171;font-weight:700;">New client checklist submission</p>
-        <h1 style="margin:0 0 10px;font-size:30px;font-family:Georgia,Palatino Linotype,serif;color:#224f49;">Dr. Copeland Tier 2 checklist</h1>
+        <h1 style="margin:0 0 10px;font-size:30px;font-family:Georgia,Palatino Linotype,serif;color:#224f49;">NurtureCal Tier 2 checklist</h1>
         <p style="margin:0 0 18px;font-size:14px;color:#546a69;">Submitted at: ${escapeHtml(submittedAt)}</p>
         ${sectionsHtml}
       </div>
@@ -66,7 +66,7 @@ function renderEmailText(values: ChecklistValues, submittedAt: string) {
     })
     .join("\n\n----------------------------------------\n\n");
 
-  return `Dr. Copeland Tier 2 checklist\nSubmitted at: ${submittedAt}\n\n${sectionsText}`;
+  return `NurtureCal Tier 2 checklist\nSubmitted at: ${submittedAt}\n\n${sectionsText}`;
 }
 
 export async function POST(request: Request) {
@@ -96,7 +96,7 @@ export async function POST(request: Request) {
       from,
       to,
       replyTo,
-      subject: "Copeland Tier 2 checklist submission",
+      subject: "NurtureCal Tier 2 checklist submission",
       html: renderEmailHtml(values, submittedAt),
       text: renderEmailText(values, submittedAt)
     });

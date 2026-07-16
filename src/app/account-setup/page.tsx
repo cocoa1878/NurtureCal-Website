@@ -29,7 +29,7 @@ const guides: AccountGuide[] = [
     steps: [
       "Go to GitHub and create a free account.",
       "Verify your email and turn on two-factor authentication if GitHub asks.",
-      "Create one private repository for the project. A simple name like copeland-app is fine.",
+      "Create one private repository for the project. A simple name like nurturecal-app is fine.",
       "Open the repository, go to Settings, then Collaborators, then Add people.",
       "Invite richard@m2ai.tech."
     ],

@@ -8,7 +8,7 @@ import {
   type FieldDefinition
 } from "@/lib/checklist";
 
-const STORAGE_KEY = "copeland-tier2-checklist-draft";
+const STORAGE_KEY = "nurturecal-tier2-checklist-draft";
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
@@ -174,7 +174,7 @@ export function ChecklistForm() {
     <form className="checklist-shell" onSubmit={handleSubmit}>
       <section className="hero-card">
         <div className="eyebrow">Project intake form</div>
-        <h1>Dr. Copeland Tier 2 checklist</h1>
+        <h1>NurtureCal Tier 2 checklist</h1>
         <p className="hero-copy">
           This page follows the exact checklist Richard prepared for the project. Fill in what you
           know now. If you are unsure about an item, you can leave a note and it can be finalized
