@@ -37,7 +37,7 @@ export default function LoginView({
               readOnly
               tabIndex={-1}
               type="text"
-              value="Corinne"
+              value="NurtureCal owner"
             />
             <label htmlFor="owner-password">Password</label>
             <input

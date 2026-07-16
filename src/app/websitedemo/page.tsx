@@ -435,12 +435,13 @@ export default function WebsiteDemoPage() {
 
         <section className={styles.section}>
           <div className={styles.supportHeading}>
-            <p className={styles.supportKicker}>Built for follow-through</p>
+            <p className={styles.supportKicker}>Medical-provider developed</p>
             <h2>Keep the essentials in one simple routine.</h2>
             <p className={styles.supportIntro}>
-              NurtureCal brings daily targets, flexible food logging, meal ideas, and
-              progress tracking together for general wellness support. It is not a
-              substitute for medical care or individualized clinical advice.
+              Developed by a medical provider, NurtureCal brings daily targets,
+              flexible food logging, meal ideas, and progress tracking together for
+              general wellness support. It is not a substitute for medical care or
+              individualized clinical advice.
             </p>
           </div>
 

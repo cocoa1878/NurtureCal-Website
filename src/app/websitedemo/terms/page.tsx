@@ -87,10 +87,15 @@ export default function WebsiteDemoTermsPage() {
         <section className={styles.section}>
           <h2>User content and AI features</h2>
           <p>
-            You may provide food logs, custom-food entries, measurements, and meal
-            photos so the service can operate. You keep ownership of content you provide,
-            but you give us permission to host, process, and use it as needed to run
-            the service for you.
+            You may provide food logs, custom-food entries, and measurements so the
+            service can operate. You keep ownership of content you provide, but you
+            give us permission to host, process, and use it as needed to run the
+            service for you.
+          </p>
+          <p>
+            Meal photos are sent for analysis when you choose that feature. The saved
+            image remains on your device and is not stored in your NurtureCal cloud
+            account.
           </p>
           <p>
             If you use AI-powered features, you understand that responses may be incomplete,

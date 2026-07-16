@@ -55,7 +55,8 @@ export default function WebsiteDemoPrivacyPage() {
           <ul>
             <li>Waitlist and support details such as your name, email address, and messages you send us</li>
             <li>Account and profile details such as email, age, sex, height, current weight, goal weight, training mode, reminder preference, and selected wellness settings</li>
-            <li>Nutrition and progress data such as calorie targets, macro targets, food logs, custom foods, meal photos you choose to upload, meal suggestions, weight entries, and body measurements</li>
+            <li>Nutrition and progress data such as calorie targets, macro targets, food logs, custom foods, meal-photo analysis results, meal suggestions, weight entries, and body measurements</li>
+            <li>Meal photos you choose to analyze are sent for processing and saved only on your device; the image itself is not stored in your NurtureCal cloud account</li>
             <li>Subscription and entitlement records needed to manage paid access, such as plan status and store transaction references</li>
             <li>Technical and operational information such as device, browser, IP, server logs, and request metadata used for reliability, fraud prevention, and security</li>
           </ul>
@@ -71,7 +72,7 @@ export default function WebsiteDemoPrivacyPage() {
             <li>Creating and securing your account</li>
             <li>Calculating nutrition targets and presenting your in-app dashboard</li>
             <li>Saving your food logs, progress history, reminder settings, and waitlist signup</li>
-            <li>Processing meal-photo analysis and meal suggestions when you choose to use those features</li>
+            <li>Temporarily processing meal photos for analysis and processing meal suggestions when you choose to use those features</li>
             <li>Sending waitlist, support, or transactional emails</li>
             <li>Monitoring performance, preventing abuse, troubleshooting issues, and complying with legal obligations</li>
           </ul>

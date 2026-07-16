@@ -7,7 +7,7 @@ import styles from "./owner-guide.module.css";
 
 export const metadata: Metadata = {
   title: "NurtureCal Owner Guide",
-  description: "Corinne's private guide to NurtureCal downloads, members, and Apple Ads.",
+  description: "Private owner guide to NurtureCal downloads, members, and Apple Ads.",
   robots: { index: false, follow: false },
 };
 
@@ -58,12 +58,12 @@ export default async function OwnerGuidePage({ searchParams }: OwnerGuidePagePro
     <GuideShell>
       <header className={styles.topbar}>
         <span>Guide updated July 9, 2026</span>
-        <span className={styles.avatar} aria-label="Corinne">C</span>
+        <span className={styles.avatar} aria-label="Account owner">N</span>
       </header>
 
       <section className={styles.homeHero}>
         <p className={styles.eyebrow}>Your NurtureCal owner guide</p>
-        <h1>Hi Corinne, what would you like to check?</h1>
+        <h1>What would you like to check?</h1>
         <p className={styles.heroIntro}>Choose the question that sounds most like yours. We’ll take you directly to the right place and show you exactly what to look for.</p>
 
         <div className={styles.questionGrid}>

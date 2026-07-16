@@ -145,7 +145,7 @@ export default function AccountSetupPage() {
     <main className="guide-wrap">
       <section className="guide-hero">
         <div className="eyebrow">Simple setup guide</div>
-        <h1>Account Setup for Dr. Corinne Copeland</h1>
+        <h1>NurtureCal account setup</h1>
         <p className="guide-intro">
           Set these up in this order. Keep each account in your name or business name. Add
           Richard at <strong>richard@m2ai.tech</strong> when the step says to do it.
