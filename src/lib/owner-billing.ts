@@ -4,6 +4,8 @@ import Stripe from "stripe";
 export type OwnerBillingInvoice = {
   id: string;
   stripe_invoice_id: string;
+  stripe_customer_id: string | null;
+  stripe_subscription_id: string | null;
   invoice_number: string | null;
   customer_email: string | null;
   status: "draft" | "open" | "paid" | "uncollectible" | "void";
@@ -18,8 +20,11 @@ export type OwnerBillingInvoice = {
   hosted_invoice_url: string | null;
   invoice_pdf_url: string | null;
   description: string | null;
+  raw_invoice: Record<string, unknown> | null;
   created_at: string;
 };
+
+export const NURTURECAL_STRIPE_CUSTOMER_ID = "cus_UBI6udcJrbAw82";
 
 type BillingDatabase = {
   public: {
@@ -82,6 +87,10 @@ function idOf(value: string | { id: string } | null) {
   return typeof value === "string" ? value : value?.id ?? null;
 }
 
+export function isNurtureCalOwnerInvoice(invoice: Stripe.Invoice) {
+  return idOf(invoice.customer) === NURTURECAL_STRIPE_CUSTOMER_ID;
+}
+
 const monthNumbers: Record<string, number> = {
   jan: 1,
   january: 1,
@@ -113,6 +122,18 @@ function dateOnlyIso(year: number, month: number, day: number) {
   return new Date(Date.UTC(year, month - 1, day, 12)).toISOString();
 }
 
+function addUtcDays(value: string | null, days: number) {
+  if (!value) return null;
+  const date = new Date(value);
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString();
+}
+
+function isSubscriptionLine(line: Stripe.InvoiceLineItem) {
+  const legacyLine = line as unknown as { subscription?: string | null; type?: string };
+  return line.parent?.type === "subscription_item_details" || legacyLine.type === "subscription" || Boolean(legacyLine.subscription);
+}
+
 function parseServicePeriodText(text: string | null | undefined) {
   if (!text) return null;
 
@@ -133,9 +154,21 @@ function parseServicePeriodText(text: string | null | undefined) {
   };
 }
 
-function servicePeriod(invoice: Stripe.Invoice) {
-  if (invoice.period_start && invoice.period_end && invoice.period_start !== invoice.period_end) {
-    return { start: isoDate(invoice.period_start), end: isoDate(invoice.period_end) };
+export function servicePeriodFromStripeInvoice(invoice: Stripe.Invoice) {
+  const textPeriod = [invoice.description, ...(invoice.lines?.data.map((line) => line.description) ?? [])]
+    .map(parseServicePeriodText)
+    .find((period): period is { start: string; end: string } => Boolean(period));
+
+  if (textPeriod) return textPeriod;
+
+  const subscriptionLine = invoice.lines?.data.find(
+    (line) => isSubscriptionLine(line) && line.period?.start && line.period?.end && line.period.start !== line.period.end,
+  );
+  if (subscriptionLine?.period) {
+    return {
+      start: isoDate(subscriptionLine.period.start),
+      end: addUtcDays(isoDate(subscriptionLine.period.end), -1),
+    };
   }
 
   const lineWithPeriod = invoice.lines?.data.find((line) => line.period?.start && line.period?.end && line.period.start !== line.period.end);
@@ -143,20 +176,30 @@ function servicePeriod(invoice: Stripe.Invoice) {
     return { start: isoDate(lineWithPeriod.period.start), end: isoDate(lineWithPeriod.period.end) };
   }
 
-  const textPeriod =
-    parseServicePeriodText(invoice.description) ??
-    invoice.lines?.data.map((line) => parseServicePeriodText(line.description)).find((period): period is { start: string; end: string } => Boolean(period));
+  const parent = invoice.parent as { subscription_details?: unknown; type?: string } | null;
+  if (parent?.type === "subscription_details" || parent?.subscription_details) {
+    return { start: isoDate(invoice.period_start), end: addUtcDays(isoDate(invoice.period_end), -1) };
+  }
 
-  if (textPeriod) return textPeriod;
   return { start: isoDate(invoice.period_start), end: isoDate(invoice.period_end) };
 }
 
+export function ownerBillingServicePeriod(invoice: OwnerBillingInvoice) {
+  const rawInvoice = invoice.raw_invoice;
+  if (rawInvoice?.object === "invoice") {
+    return servicePeriodFromStripeInvoice(rawInvoice as unknown as Stripe.Invoice);
+  }
+  return { start: invoice.service_period_start, end: invoice.service_period_end };
+}
+
 export async function syncStripeInvoice(invoice: Stripe.Invoice) {
+  if (!isNurtureCalOwnerInvoice(invoice)) return false;
+
   const client = getOwnerBillingClient();
   if (!client) throw new Error("Owner billing Supabase credentials are not configured.");
 
   const parent = invoice.parent as { subscription_details?: { subscription?: string | { id: string } } } | null;
-  const period = servicePeriod(invoice);
+  const period = servicePeriodFromStripeInvoice(invoice);
   const { error } = await client.from("owner_billing_invoices").upsert(
     {
       stripe_invoice_id: invoice.id,
@@ -182,6 +225,7 @@ export async function syncStripeInvoice(invoice: Stripe.Invoice) {
   );
 
   if (error) throw new Error(`Unable to sync Stripe invoice: ${error.message}`);
+  return true;
 }
 
 export function formatBillingAmount(cents: number, currency = "usd") {

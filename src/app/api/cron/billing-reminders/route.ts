@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import { formatBillingAmount, getOwnerBillingClient, type OwnerBillingInvoice } from "@/lib/owner-billing";
+import { formatBillingAmount, getOwnerBillingClient, NURTURECAL_STRIPE_CUSTOMER_ID, type OwnerBillingInvoice } from "@/lib/owner-billing";
 
 export const runtime = "nodejs";
 
@@ -62,6 +62,7 @@ export async function GET(request: Request) {
   const { data: invoices, error } = await billing
     .from("owner_billing_invoices")
     .select("*")
+    .eq("stripe_customer_id", NURTURECAL_STRIPE_CUSTOMER_ID)
     .eq("status", "open")
     .not("due_at", "is", null);
 

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import GuideShell from "../GuideShell";
 import { isOwnerAuthenticated } from "../auth";
-import { formatBillingAmount, getOwnerBillingClient } from "@/lib/owner-billing";
+import { formatBillingAmount, getOwnerBillingClient, NURTURECAL_STRIPE_CUSTOMER_ID, ownerBillingServicePeriod } from "@/lib/owner-billing";
 import styles from "../owner-guide.module.css";
 
 export const dynamic = "force-dynamic";
@@ -24,7 +24,11 @@ export default async function OwnerBillingPage() {
 
   const billing = getOwnerBillingClient();
   const { data: invoices, error } = billing
-    ? await billing.from("owner_billing_invoices").select("*").order("created_at", { ascending: false })
+    ? await billing
+        .from("owner_billing_invoices")
+        .select("*")
+        .eq("stripe_customer_id", NURTURECAL_STRIPE_CUSTOMER_ID)
+        .order("created_at", { ascending: false })
     : { data: null, error: null };
 
   return (
@@ -50,7 +54,7 @@ export default async function OwnerBillingPage() {
                 <h2>{invoice.invoice_number || "NurtureCal support invoice"}</h2>
                 <p className={styles.sectionIntro}>{formatBillingAmount(invoice.amount_due_cents, invoice.currency)} · Due {formatDate(invoice.due_at)}</p>
                 <ol>
-                  <li><b>1</b><span>Service period: {formatDate(invoice.service_period_start)} – {formatDate(invoice.service_period_end)}</span></li>
+                  <li><b>1</b><span>Service period: {formatDate(ownerBillingServicePeriod(invoice).start)} – {formatDate(ownerBillingServicePeriod(invoice).end)}</span></li>
                   <li><b>2</b><span>Paid: {invoice.paid_at ? formatDate(invoice.paid_at) : "Not yet"}</span></li>
                 </ol>
                 {invoice.hosted_invoice_url ? <a className={styles.destinationButton} href={invoice.hosted_invoice_url} rel="noreferrer" target="_blank">Open secure Stripe invoice ↗</a> : null}

@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
-import { getOwnerBillingClient, syncStripeInvoice } from "@/lib/owner-billing";
+import { getOwnerBillingClient, isNurtureCalOwnerInvoice, syncStripeInvoice } from "@/lib/owner-billing";
 
 export const runtime = "nodejs";
 
@@ -25,6 +25,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid Stripe signature." }, { status: 400 });
   }
 
+  const stripeObject = event.data.object;
+  if (stripeObject.object !== "invoice" || !isNurtureCalOwnerInvoice(stripeObject)) {
+    return NextResponse.json({ received: true, ignored: true });
+  }
+
   const billing = getOwnerBillingClient();
   if (!billing) {
     return NextResponse.json({ error: "Billing database is not configured." }, { status: 503 });
@@ -46,9 +51,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    if (event.data.object.object === "invoice") {
-      await syncStripeInvoice(event.data.object);
-    }
+    await syncStripeInvoice(stripeObject);
 
     await billing
       .from("owner_billing_webhook_events")
