@@ -1,51 +1,9 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import { formatBillingAmount, getOwnerBillingClient, NURTURECAL_STRIPE_CUSTOMER_ID, type OwnerBillingInvoice } from "@/lib/owner-billing";
+import { chicagoDate, reminderCopy, reminderFor } from "@/lib/billing-reminders";
+import { formatBillingAmount, getOwnerBillingClient, NURTURECAL_STRIPE_CUSTOMER_ID } from "@/lib/owner-billing";
 
 export const runtime = "nodejs";
-
-type ReminderKind = "before_due_3" | "overdue_3" | "overdue_7";
-
-function chicagoDate(value: Date) {
-  const parts = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/Chicago",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).formatToParts(value);
-  const part = (type: string) => parts.find((item) => item.type === type)?.value;
-  return `${part("year")}-${part("month")}-${part("day")}`;
-}
-
-function addDays(date: string, days: number) {
-  const [year, month, day] = date.split("-").map(Number);
-  const result = new Date(Date.UTC(year, month - 1, day + days));
-  return result.toISOString().slice(0, 10);
-}
-
-function reminderFor(invoice: OwnerBillingInvoice, today: string): ReminderKind | null {
-  if (!invoice.due_at) return null;
-  const dueDate = chicagoDate(new Date(invoice.due_at));
-  if (today === addDays(dueDate, -3)) return "before_due_3";
-  if (today === addDays(dueDate, 3)) return "overdue_3";
-  if (today === addDays(dueDate, 7)) return "overdue_7";
-  return null;
-}
-
-function reminderCopy(kind: ReminderKind, invoice: OwnerBillingInvoice) {
-  const amount = formatBillingAmount(invoice.amount_due_cents, invoice.currency);
-  const dueDate = invoice.due_at
-    ? new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "America/Chicago" }).format(new Date(invoice.due_at))
-    : "the listed due date";
-
-  if (kind === "before_due_3") {
-    return { subject: `Reminder: NurtureCal support invoice due ${dueDate}`, heading: "Your support invoice is due soon.", body: `Your ${amount} NurtureCal support invoice is due on ${dueDate}.` };
-  }
-  if (kind === "overdue_3") {
-    return { subject: "Courtesy reminder: NurtureCal support invoice", heading: "A quick payment reminder.", body: `Your ${amount} NurtureCal support invoice was due on ${dueDate}.` };
-  }
-  return { subject: "Follow-up: NurtureCal support invoice", heading: "A quick follow-up on your invoice.", body: `Your ${amount} NurtureCal support invoice remains unpaid after its ${dueDate} due date.` };
-}
 
 export async function GET(request: Request) {
   const cronSecret = process.env.CRON_SECRET;
@@ -87,14 +45,17 @@ export async function GET(request: Request) {
       .maybeSingle();
     if (existing) continue;
 
-    const copy = reminderCopy(kind, invoice);
+    const amountRemaining = invoice.amount_due_cents - invoice.amount_paid_cents;
+    const amount = formatBillingAmount(amountRemaining, invoice.currency);
+    const dueDate = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "America/Chicago" }).format(new Date(invoice.due_at!));
+    const copy = reminderCopy(kind, amount, dueDate);
     try {
       const email = await resend.emails.send({
         from,
         to: invoice.customer_email,
         subject: copy.subject,
-        html: `<div style="font-family:Arial,sans-serif;line-height:1.6;color:#173633"><h1>${copy.heading}</h1><p>${copy.body}</p><p><a href="${invoice.hosted_invoice_url}">Open secure Stripe invoice</a></p><p><a href="${portalUrl}">View billing history</a></p></div>`,
-        text: `${copy.heading}\n\n${copy.body}\n\nPay securely: ${invoice.hosted_invoice_url}\nView billing history: ${portalUrl}`,
+        html: `<div style="font-family:Arial,sans-serif;line-height:1.6;color:#173633"><h1>${copy.heading}</h1><p>${copy.body}</p><p>${copy.closing}</p><p><a href="${invoice.hosted_invoice_url}">Open secure Stripe invoice</a></p><p><a href="${portalUrl}">View billing history</a></p><p>Thank you,<br>NurtureCal</p></div>`,
+        text: `${copy.heading}\n\n${copy.body}\n\n${copy.closing}\n\nPay securely: ${invoice.hosted_invoice_url}\nView billing history: ${portalUrl}\n\nThank you,\nNurtureCal`,
       });
       await billing.from("owner_billing_reminder_log").upsert(
         { invoice_id: invoice.id, reminder_kind: kind, recipient_email: invoice.customer_email, status: "sent", resend_email_id: email.data?.id ?? null },
